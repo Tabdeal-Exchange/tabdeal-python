@@ -30,3 +30,13 @@ class Spot(Client):
             security_type=SecurityTypes.TRADE,
             data=data,
         )
+
+    def get_open_orders(self, symbol: str = None):
+        data = dict() if not symbol else dict(symbol=symbol)
+
+        return self.request(
+            url="openOrders",
+            method=RequestTypes.GET,
+            security_type=SecurityTypes.TRADE,
+            data=data,
+        )
