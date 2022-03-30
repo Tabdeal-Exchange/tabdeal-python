@@ -6,7 +6,7 @@ from tabdeal.utils import check_new_order_params
 class Spot(Client):
     def new_order(
         self,
-        symbol,
+        symbol: str,
         side: OrderSides,
         type: OrderTypes,
         quantity: int,
@@ -36,6 +36,19 @@ class Spot(Client):
 
         return self.request(
             url="openOrders",
+            method=RequestTypes.GET,
+            security_type=SecurityTypes.TRADE,
+            data=data,
+        )
+
+    def get_order(self, symbol: str, order_id: str):
+        data = {
+            "symbol": symbol,
+            "orderId": order_id,
+        }
+
+        return self.request(
+            url="order",
             method=RequestTypes.GET,
             security_type=SecurityTypes.TRADE,
             data=data,
