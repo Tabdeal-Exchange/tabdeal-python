@@ -9,6 +9,7 @@ class SecurityTypes(Enum):
 class RequestTypes(Enum):
     GET = "GET"
     POST = "POST"
+    DELETE = "DELETE"
 
 
 class OrderSides(Enum):

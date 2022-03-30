@@ -57,17 +57,22 @@ class Client(object):
         self._set_security_data(data, security_type)
 
         if method == RequestTypes.GET:
-            return self._get(url, params=data)
+            response = self._get(url, params=data)
         elif method == RequestTypes.POST:
-            return self._post(url, data=data)
+            response = self._post(url, data=data)
+        elif method == RequestTypes.DELETE:
+            response = self._delete(url, params=data)
+
+        return self._handle_response(response)
 
     def _get(self, url, params: dict = dict()):
-        response = self.session.get(self.base_url + url, params=params)
-        return self._handle_response(response)
+        return self.session.get(self.base_url + url, params=params)
 
     def _post(self, url, data: dict = dict()):
-        response = self.session.post(self.base_url + url, data=data)
-        return self._handle_response(response)
+        return self.session.post(self.base_url + url, data=data)
+
+    def _delete(self, url, params: dict = dict()):
+        return self.session.delete(self.base_url + url, params=params)
 
     def _handle_response(self, response):
         if response.status_code < 400:
