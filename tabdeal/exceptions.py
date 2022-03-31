@@ -12,19 +12,21 @@ class UnStructuredResponseException(CoreException):
 
 
 class ClientException(CoreException):
-    def __init__(self, status, message, code):
+    def __init__(self, status, message, code, detail=None):
         self.status = status
         self.message = message
         self.code = code
+        self.detail = detail
 
     def __str__(self):
         return self.message
 
 
 class ServerException(CoreException):
-    def __init__(self, status, message):
+    def __init__(self, status, message, detail=None):
         self.status = status
         self.message = message
+        self.detail = detail
 
     def __str__(self):
         return self.message

@@ -80,7 +80,10 @@ class Client(object):
         elif 400 <= response.status_code < 500:
             js = self._get_response_json(response)
             raise ClientException(
-                status=response.status_code, message=js["msg"], code=js["code"]
+                status=response.status_code,
+                message=js["msg"],
+                code=js["code"],
+                detail=js.get("detail", None),
             )
         else:
             raise ServerException(status=response.status_code, message=response.text)
