@@ -66,3 +66,13 @@ class Spot(Client):
             security_type=SecurityTypes.TRADE,
             data=data,
         )
+
+    def my_trades(self, symbol: str):
+        data = {"symbol": symbol}
+
+        return self.request(
+            url="myTrades",
+            method=RequestTypes.GET,
+            security_type=SecurityTypes.TRADE,
+            data=data,
+        )
