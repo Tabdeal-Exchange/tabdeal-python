@@ -76,3 +76,30 @@ class Spot(Client):
             security_type=SecurityTypes.TRADE,
             data=data,
         )
+
+    def get_orders(
+        self,
+        symbol: str,
+        start_time: int = None,
+        end_time: int = None,
+        limit: int = None,
+    ):
+        data = {
+            "symbol": symbol,
+        }
+
+        if start_time:
+            data.update({"startTime": start_time})
+
+        if end_time:
+            data.update({"endTime": end_time})
+
+        if limit:
+            data.update({"limit": limit})
+
+        return self.request(
+            url="allOrders",
+            method=RequestTypes.GET,
+            security_type=SecurityTypes.TRADE,
+            data=data,
+        )
