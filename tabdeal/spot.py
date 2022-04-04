@@ -103,3 +103,13 @@ class Spot(Client):
             security_type=SecurityTypes.TRADE,
             data=data,
         )
+
+    def cancel_open_orders(self, symbol: str):
+        data = {"symbol": symbol}
+
+        return self.request(
+            url="openOrders",
+            method=RequestTypes.DELETE,
+            security_type=SecurityTypes.TRADE,
+            data=data,
+        )
