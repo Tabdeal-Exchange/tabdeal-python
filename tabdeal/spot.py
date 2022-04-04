@@ -113,3 +113,16 @@ class Spot(Client):
             security_type=SecurityTypes.TRADE,
             data=data,
         )
+
+    def depth(self, symbol: str, limit: int = None):
+        data = {"symbol": symbol}
+
+        if limit:
+            data.update({"limit": limit})
+
+        return self.request(
+            url="depth",
+            method=RequestTypes.GET,
+            security_type=SecurityTypes.TRADE,
+            data=data,
+        )
