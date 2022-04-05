@@ -4,6 +4,7 @@ from tabdeal.utils import check_new_order_params
 
 
 class Spot(Client):
+    # SPOT
     def new_order(
         self,
         symbol: str,
@@ -114,6 +115,7 @@ class Spot(Client):
             data=data,
         )
 
+    # MARKET
     def depth(self, symbol: str, limit: int = None):
         data = {"symbol": symbol}
 
@@ -123,6 +125,19 @@ class Spot(Client):
         return self.request(
             url="depth",
             method=RequestTypes.GET,
-            security_type=SecurityTypes.TRADE,
+            security_type=SecurityTypes.NONE,
+            data=data,
+        )
+
+    def trades(self, symbol: str, limit: int = None):
+        data = {"symbol": symbol}
+
+        if limit:
+            data.update({"limit": limit})
+
+        return self.request(
+            url="trades",
+            method=RequestTypes.GET,
+            security_type=SecurityTypes.NONE,
             data=data,
         )
