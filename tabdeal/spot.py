@@ -1,3 +1,5 @@
+from typing import Sequence
+
 from tabdeal.client import Client
 from tabdeal.enums import OrderSides, OrderTypes, RequestTypes, SecurityTypes
 from tabdeal.utils import check_new_order_params
@@ -137,6 +139,23 @@ class Spot(Client):
 
         return self.request(
             url="trades",
+            method=RequestTypes.GET,
+            security_type=SecurityTypes.NONE,
+            data=data,
+        )
+
+    def exchange_info(self, symbol: str = None, symbols: Sequence[str] = None):
+        data = dict()
+
+        if symbol:
+            data.update({"symbol": symbol})
+
+        elif symbols:
+            symbols = '["' + '","'.join(symbols) + '"]'
+            data.update({"symbols": symbols})
+
+        return self.request(
+            url="exchangeInfo",
             method=RequestTypes.GET,
             security_type=SecurityTypes.NONE,
             data=data,
