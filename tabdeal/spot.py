@@ -167,3 +167,10 @@ class Spot(Client):
             method=RequestTypes.GET,
             security_type=SecurityTypes.NONE,
         )
+
+    def time(self):
+        return self.request(
+            url="time",
+            method=RequestTypes.GET,
+            security_type=SecurityTypes.NONE,
+        )
