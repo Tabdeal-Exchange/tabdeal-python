@@ -160,3 +160,10 @@ class Spot(Client):
             security_type=SecurityTypes.NONE,
             data=data,
         )
+
+    def ping(self):
+        return self.request(
+            url="ping",
+            method=RequestTypes.GET,
+            security_type=SecurityTypes.NONE,
+        )
