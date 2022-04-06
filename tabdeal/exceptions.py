@@ -39,3 +39,11 @@ class ParameterRequiredException(CoreException):
 
     def __str__(self):
         return "'{}' field is required for {}".format(self.param, self.action)
+
+
+class SecurityException(CoreException):
+    def __init__(self, message):
+        self.message = message
+
+    def __str__(self):
+        return self.message

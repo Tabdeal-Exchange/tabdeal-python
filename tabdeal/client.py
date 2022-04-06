@@ -9,6 +9,7 @@ import requests
 from tabdeal.enums import RequestTypes, SecurityTypes
 from tabdeal.exceptions import (
     ClientException,
+    SecurityException,
     ServerException,
     UnStructuredResponseException,
 )
@@ -29,10 +30,10 @@ class Client(object):
 
     def __init__(
         self,
-        base_url="https://api.tabdeal.org",
-        version="v1",
         api_key=None,
         api_secret=None,
+        base_url="https://api.tabdeal.org",
+        version="v1",
         timeout=None,
         receive_window=None,
     ):
@@ -52,6 +53,7 @@ class Client(object):
         data: dict = dict(),
         headers: dict = dict(),
     ):
+        self._check_security_requirements(security_type)
         self._set_security_header(headers, security_type)
         self._update_session_headers(headers)
         self._set_security_data(data, security_type)
@@ -64,6 +66,11 @@ class Client(object):
             response = self._delete(url, params=data)
 
         return self._handle_response(response)
+
+    def _check_security_requirements(self, security_type: SecurityTypes):
+        if security_type == SecurityTypes.TRADE:
+            if not self.api_key or not self.api_secret:
+                raise SecurityException("'api-key' and 'api-secret' must provided")
 
     def _get(self, url, params: dict = dict()):
         return self.session.get(self.base_url + url, params=params)
