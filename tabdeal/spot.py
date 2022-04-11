@@ -2,7 +2,7 @@ from typing import Sequence
 
 from tabdeal.client import Client
 from tabdeal.enums import OrderSides, OrderTypes, RequestTypes, SecurityTypes
-from tabdeal.utils import check_new_order_params
+from tabdeal.utils import add_symbol_to_data, check_new_order_params
 
 
 class Spot(Client):
@@ -19,13 +19,14 @@ class Spot(Client):
         check_new_order_params(type, price=price, stop_price=stop_price)
 
         data = {
-            "symbol": symbol,
             "side": side.value,
             "type": type.value,
             "quantity": quantity,
             "price": 0 if not price else price,
             "stopPrice": 0 if not stop_price else stop_price,
         }
+
+        add_symbol_to_data(data, symbol)
 
         return self.request(
             url="order",
@@ -35,7 +36,7 @@ class Spot(Client):
         )
 
     def get_open_orders(self, symbol: str = None):
-        data = dict() if not symbol else dict(symbol=symbol)
+        data = dict() if not symbol else add_symbol_to_data(dict(), symbol)
 
         return self.request(
             url="openOrders",
@@ -46,9 +47,10 @@ class Spot(Client):
 
     def get_order(self, symbol: str, order_id: str):
         data = {
-            "symbol": symbol,
             "orderId": order_id,
         }
+
+        add_symbol_to_data(data, symbol)
 
         return self.request(
             url="order",
@@ -59,9 +61,10 @@ class Spot(Client):
 
     def cancel_order(self, symbol: str, order_id: str):
         data = {
-            "symbol": symbol,
             "orderId": order_id,
         }
+
+        add_symbol_to_data(data, symbol)
 
         return self.request(
             url="order",
@@ -71,7 +74,9 @@ class Spot(Client):
         )
 
     def my_trades(self, symbol: str):
-        data = {"symbol": symbol}
+        data = dict()
+
+        add_symbol_to_data(data, symbol)
 
         return self.request(
             url="myTrades",
@@ -87,9 +92,9 @@ class Spot(Client):
         end_time: int = None,
         limit: int = None,
     ):
-        data = {
-            "symbol": symbol,
-        }
+        data = dict()
+
+        add_symbol_to_data(data, symbol)
 
         if start_time:
             data.update({"startTime": start_time})
@@ -108,7 +113,9 @@ class Spot(Client):
         )
 
     def cancel_open_orders(self, symbol: str):
-        data = {"symbol": symbol}
+        data = dict()
+
+        add_symbol_to_data(data, symbol)
 
         return self.request(
             url="openOrders",
@@ -119,7 +126,9 @@ class Spot(Client):
 
     # MARKET
     def depth(self, symbol: str, limit: int = None):
-        data = {"symbol": symbol}
+        data = dict()
+
+        add_symbol_to_data(data, symbol)
 
         if limit:
             data.update({"limit": limit})
@@ -132,7 +141,9 @@ class Spot(Client):
         )
 
     def trades(self, symbol: str, limit: int = None):
-        data = {"symbol": symbol}
+        data = dict()
+
+        add_symbol_to_data(data, symbol)
 
         if limit:
             data.update({"limit": limit})
@@ -148,7 +159,7 @@ class Spot(Client):
         data = dict()
 
         if symbol:
-            data.update({"symbol": symbol})
+            add_symbol_to_data(data, symbol)
 
         elif symbols:
             symbols = '["' + '","'.join(symbols) + '"]'

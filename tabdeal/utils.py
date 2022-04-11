@@ -12,3 +12,12 @@ def check_new_order_params(order_type: OrderTypes, **kwargs):
     for field in order_type_required_fields.get(order_type):
         if not kwargs.get(field, None):
             raise ParameterRequiredException(param=field, action="new order")
+
+
+def add_symbol_to_data(data, symbol):
+    if "_" in symbol:
+        data.update({"tabdeal_symbol": symbol})
+    else:
+        data.update({"symbol": symbol})
+
+    return data
