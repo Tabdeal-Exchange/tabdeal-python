@@ -64,6 +64,8 @@ class Client(object):
             response = self._post(url, data=data)
         elif method == RequestTypes.DELETE:
             response = self._delete(url, params=data)
+        elif method == RequestTypes.PUT:
+            response = self._put(url, data=data)
 
         return self._handle_response(response)
 
@@ -80,6 +82,9 @@ class Client(object):
 
     def _delete(self, url, params: dict = dict()):
         return self.session.delete(self.base_url + url, params=params)
+
+    def _put(self, url, data: dict = dict()):
+        return self.session.put(self.base_url + url, data=data)
 
     def _handle_response(self, response):
         if response.status_code < 400:

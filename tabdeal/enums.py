@@ -10,6 +10,7 @@ class RequestTypes(Enum):
     GET = "GET"
     POST = "POST"
     DELETE = "DELETE"
+    PUT = "PUT"
 
 
 class OrderSides(Enum):
