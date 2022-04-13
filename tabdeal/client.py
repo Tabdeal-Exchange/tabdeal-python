@@ -108,12 +108,15 @@ class Client(object):
 
     def _set_security_header(self, headers: dict, security_type: SecurityTypes):
         if security_type == SecurityTypes.TRADE:
-            headers.update({"api-key": self.api_key})
+            headers.update({"X-MBX-APIKEY": self.api_key})
 
     def _set_security_data(self, data: dict, security_type: SecurityTypes):
         if security_type == SecurityTypes.TRADE:
             timestamp = time.time() * 1000
             data.update({"timestamp": timestamp})
+
+            if self.receive_window:
+                data.update({"recvWindow": self.receive_window})
 
             data_query = urlencode(data)
             signature = hmac.new(
@@ -123,9 +126,6 @@ class Client(object):
             ).hexdigest()
 
             data.update({"signature": signature})
-
-            if self.receive_window:
-                data.update({"recvWindow": self.receive_window})
 
     def _update_session_headers(self, headers):
         self.session.headers.update(headers)
