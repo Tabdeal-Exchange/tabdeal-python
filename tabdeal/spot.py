@@ -45,7 +45,7 @@ class Spot(Client):
             data=data,
         )
 
-    def get_order(self, symbol: str, order_id: str):
+    def get_order(self, symbol: str, order_id: int):
         data = {
             "orderId": order_id,
         }
@@ -59,7 +59,7 @@ class Spot(Client):
             data=data,
         )
 
-    def cancel_order(self, symbol: str, order_id: str):
+    def cancel_order(self, symbol: str, order_id: int):
         data = {
             "orderId": order_id,
         }
