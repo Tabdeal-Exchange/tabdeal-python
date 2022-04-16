@@ -13,6 +13,7 @@ class Spot(Client):
         side: OrderSides,
         type: OrderTypes,
         quantity: int,
+        client_order_id: str = None,
         price: float = None,
         stop_price: float = None,
     ):
@@ -27,6 +28,9 @@ class Spot(Client):
         }
 
         add_symbol_to_data(data, symbol)
+
+        if client_order_id:
+            data.update({"newClientOrderId": client_order_id})
 
         return self.request(
             url="order",
