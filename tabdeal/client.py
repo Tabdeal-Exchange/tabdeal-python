@@ -38,6 +38,7 @@ class Client(object):
         receive_window=None,
     ):
         self.base_url = f"{base_url}/api/{version}/"
+        self.base_read_url = f"{base_url}/r/api/{version}/"
         self.version = version
         self.api_key = api_key
         self.api_secret = api_secret
@@ -75,7 +76,7 @@ class Client(object):
                 raise SecurityException("'api-key' and 'api-secret' must provided")
 
     def _get(self, url, params: dict = dict()):
-        return self.session.get(self.base_url + url, params=params)
+        return self.session.get(self.base_read_url + url, params=params)
 
     def _post(self, url, data: dict = dict()):
         return self.session.post(self.base_url + url, data=data)
