@@ -12,7 +12,7 @@ class Spot(Client):
         symbol: str,
         side: OrderSides,
         type: OrderTypes,
-        quantity: int,
+        quantity: float,
         client_order_id: str = None,
         price: float = None,
         stop_price: float = None,

@@ -1,12 +1,12 @@
-# Tabdeal
+# Tabdeal API Python SDK
 
-official python package to use Tabdeal API
+Official python package to use [Tabdeal](https://www.tabdeal.org/) API
 
 
 ## Installation
 
 ```
-$ pip install tabdeal
+$ pip install tabdeal-python
 ```
 
 ## Usage
