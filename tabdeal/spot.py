@@ -178,6 +178,18 @@ class Spot(Client):
             data=data,
         )
 
+    def get_oco_order(self, oco_id: int):
+        data = {
+            "orderListId": oco_id,
+        }
+
+        return self.request(
+            url="orderList",
+            method=RequestTypes.GET,
+            security_type=SecurityTypes.TRADE,
+            data=data,
+        )
+
     # MARKET
     def depth(self, symbol: str, limit: int = None):
         data = dict()
