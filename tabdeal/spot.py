@@ -128,6 +128,42 @@ class Spot(Client):
             data=data,
         )
 
+    def new_oco_order(
+        self,
+        symbol: str,
+        side: OrderSides,
+        quantity: float,
+        price: float,
+        stop_price: float,
+        stop_limit_price: float,
+        list_client_order_id: str = None,
+        limit_client_order_id: str = None,
+        stop_client_order_id: str = None,
+    ):
+        data = {
+            "side": side.value,
+            "quantity": quantity,
+            "price": price,
+            "stopPrice": stop_price,
+            "stopLimitPrice": stop_limit_price,
+        }
+
+        add_symbol_to_data(data, symbol)
+
+        if list_client_order_id:
+            data.update({"listClientOrderId": list_client_order_id})
+        if limit_client_order_id:
+            data.update({"limitClientOrderId": limit_client_order_id})
+        if stop_client_order_id:
+            data.update({"stopClientOrderId": stop_client_order_id})
+
+        return self.request(
+            url="order/oco",
+            method=RequestTypes.POST,
+            security_type=SecurityTypes.TRADE,
+            data=data,
+        )
+
     # MARKET
     def depth(self, symbol: str, limit: int = None):
         data = dict()
