@@ -190,6 +190,27 @@ class Spot(Client):
             data=data,
         )
 
+    def get_oco_orders(
+        self, start_time: int = None, end_time: int = None, limit: int = None
+    ):
+        data = dict()
+
+        if start_time:
+            data.update({"startTime": start_time})
+
+        if end_time:
+            data.update({"endTime": end_time})
+
+        if limit:
+            data.update({"limit": limit})
+
+        return self.request(
+            url="allOrderList",
+            method=RequestTypes.GET,
+            security_type=SecurityTypes.TRADE,
+            data=data,
+        )
+
     # MARKET
     def depth(self, symbol: str, limit: int = None):
         data = dict()
