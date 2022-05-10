@@ -164,6 +164,20 @@ class Spot(Client):
             data=data,
         )
 
+    def cancel_oco_order(self, symbol: str, oco_id: int):
+        data = {
+            "orderListId": oco_id,
+        }
+
+        add_symbol_to_data(data, symbol)
+
+        return self.request(
+            url="orderList",
+            method=RequestTypes.DELETE,
+            security_type=SecurityTypes.TRADE,
+            data=data,
+        )
+
     # MARKET
     def depth(self, symbol: str, limit: int = None):
         data = dict()
