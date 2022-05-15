@@ -49,12 +49,16 @@ class Spot(Client):
             data=data,
         )
 
-    def get_order(self, symbol: str, order_id: int):
-        data = {
-            "orderId": order_id,
-        }
+    def get_order(self, symbol: str, order_id: int = None, client_order_id: str = None):
+        data = dict()
 
         add_symbol_to_data(data, symbol)
+
+        if client_order_id:
+            data.update({"origClientOrderId": client_order_id})
+
+        if order_id:
+            data.update({"orderId": order_id})
 
         return self.request(
             url="order",
