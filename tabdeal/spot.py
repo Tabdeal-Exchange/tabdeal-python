@@ -67,12 +67,18 @@ class Spot(Client):
             data=data,
         )
 
-    def cancel_order(self, symbol: str, order_id: int):
-        data = {
-            "orderId": order_id,
-        }
+    def cancel_order(
+        self, symbol: str, order_id: int = None, client_order_id: str = None
+    ):
+        data = dict()
 
         add_symbol_to_data(data, symbol)
+
+        if client_order_id:
+            data.update({"origClientOrderId": client_order_id})
+
+        if order_id:
+            data.update({"orderId": order_id})
 
         return self.request(
             url="order",
@@ -168,12 +174,18 @@ class Spot(Client):
             data=data,
         )
 
-    def cancel_oco_order(self, symbol: str, oco_id: int):
-        data = {
-            "orderListId": oco_id,
-        }
+    def cancel_oco_order(
+        self, symbol: str, oco_id: int = None, client_oco_id: str = None
+    ):
+        data = dict()
 
         add_symbol_to_data(data, symbol)
+
+        if oco_id:
+            data.update({"orderListId": oco_id})
+
+        if client_oco_id:
+            data.update({"listClientOrderId": client_oco_id})
 
         return self.request(
             url="orderList",
@@ -182,10 +194,14 @@ class Spot(Client):
             data=data,
         )
 
-    def get_oco_order(self, oco_id: int):
-        data = {
-            "orderListId": oco_id,
-        }
+    def get_oco_order(self, oco_id: int = None, client_oco_id: str = None):
+        data = dict()
+
+        if oco_id:
+            data.update({"orderListId": oco_id})
+
+        if client_oco_id:
+            data.update({"origClientOrderId": client_oco_id})
 
         return self.request(
             url="orderList",
