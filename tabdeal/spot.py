@@ -1,3 +1,4 @@
+import json
 from typing import Sequence
 
 from tabdeal.client import Client
@@ -269,15 +270,24 @@ class Spot(Client):
             data=data,
         )
 
-    def exchange_info(self, symbol: str = None, symbols: Sequence[str] = None):
+    def exchange_info(
+        self,
+        symbol: str = None,
+        symbols: Sequence[str] = None,
+        tabdeal_symbols: Sequence[str] = None,
+    ):
         data = dict()
 
         if symbol:
             add_symbol_to_data(data, symbol)
 
         elif symbols:
-            symbols = '["' + '","'.join(symbols) + '"]'
+            symbols = json.dumps(symbols)
             data.update({"symbols": symbols})
+
+        elif tabdeal_symbols:
+            tabdeal_symbols = json.dumps(tabdeal_symbols)
+            data.update({"tabdealSymbols": tabdeal_symbols})
 
         return self.request(
             url="exchangeInfo",
