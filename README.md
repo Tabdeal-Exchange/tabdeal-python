@@ -1,5 +1,5 @@
 # Tabdeal API Python SDK
-[![PyPI version](https://img.shields.io/pypi/v/tabdeal-python)](https://pypi.python.org/pypi/binance-connector)
+[![PyPI version](https://img.shields.io/pypi/v/tabdeal-python)](https://pypi.python.org/pypi/tabdeal-python)
 [![Python version](https://img.shields.io/pypi/pyversions/tabdeal-python)](https://www.python.org/downloads/)
 
 
