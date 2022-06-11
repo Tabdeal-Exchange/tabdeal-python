@@ -3,6 +3,7 @@ from enum import Enum
 
 class SecurityTypes(Enum):
     TRADE = "TRADE"
+    USER_STREAM = "USER_STREAM"
     NONE = "NONE"
 
 

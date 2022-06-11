@@ -108,7 +108,7 @@ class Client(object):
             raise UnStructuredResponseException(response.status_code, response.text)
 
     def _set_security_header(self, headers: dict, security_type: SecurityTypes):
-        if security_type == SecurityTypes.TRADE:
+        if security_type in [SecurityTypes.TRADE, SecurityTypes.USER_STREAM]:
             headers.update({"X-MBX-APIKEY": self.api_key})
 
     def _set_security_data(self, data: dict, security_type: SecurityTypes):

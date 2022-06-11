@@ -309,3 +309,11 @@ class Spot(Client):
             method=RequestTypes.GET,
             security_type=SecurityTypes.NONE,
         )
+
+    # User Data Streams
+    def new_listen_key(self):
+        return self.request(
+            url="userDataStream",
+            method=RequestTypes.POST,
+            security_type=SecurityTypes.USER_STREAM,
+        )
