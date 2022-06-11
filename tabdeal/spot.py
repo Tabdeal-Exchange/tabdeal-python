@@ -317,3 +317,11 @@ class Spot(Client):
             method=RequestTypes.POST,
             security_type=SecurityTypes.USER_STREAM,
         )
+
+    def renew_listen_key(self, listen_key: str):
+        return self.request(
+            url="userDataStream",
+            method=RequestTypes.PUT,
+            security_type=SecurityTypes.USER_STREAM,
+            data={"listenKey": listen_key},
+        )
