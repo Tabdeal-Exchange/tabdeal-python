@@ -325,3 +325,11 @@ class Spot(Client):
             security_type=SecurityTypes.USER_STREAM,
             data={"listenKey": listen_key},
         )
+
+    def close_listen_key(self, listen_key: str):
+        return self.request(
+            url="userDataStream",
+            method=RequestTypes.DELETE,
+            security_type=SecurityTypes.USER_STREAM,
+            data={"listenKey": listen_key},
+        )
