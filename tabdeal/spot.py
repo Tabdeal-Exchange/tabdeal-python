@@ -88,18 +88,6 @@ class Spot(Client):
             data=data,
         )
 
-    def my_trades(self, symbol: str):
-        data = dict()
-
-        add_symbol_to_data(data, symbol)
-
-        return self.request(
-            url="myTrades",
-            method=RequestTypes.GET,
-            security_type=SecurityTypes.TRADE,
-            data=data,
-        )
-
     def get_orders(
         self,
         symbol: str,
@@ -237,6 +225,33 @@ class Spot(Client):
             url="openOrderList",
             method=RequestTypes.GET,
             security_type=SecurityTypes.TRADE,
+        )
+
+    def my_trades(
+        self,
+        symbol: str,
+        start_time: int = None,
+        end_time: int = None,
+        limit: int = None,
+    ):
+        data = dict()
+
+        add_symbol_to_data(data, symbol)
+
+        if start_time:
+            data.update({"startTime": start_time})
+
+        if end_time:
+            data.update({"endTime": end_time})
+
+        if limit:
+            data.update({"limit": limit})
+
+        return self.request(
+            url="myTrades",
+            method=RequestTypes.GET,
+            security_type=SecurityTypes.TRADE,
+            data=data,
         )
 
     # MARKET
