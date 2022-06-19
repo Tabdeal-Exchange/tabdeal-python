@@ -348,3 +348,17 @@ class Spot(Client):
             security_type=SecurityTypes.USER_STREAM,
             data={"listenKey": listen_key},
         )
+
+    # Wallet
+    def funding_wallet(self, asset: str = None):
+        data = dict()
+
+        if asset:
+            data.update({"asset": asset})
+
+        return self.request(
+            url="asset/get-funding-asset",
+            method=RequestTypes.GET,
+            security_type=SecurityTypes.TRADE,
+            data=data,
+        )
