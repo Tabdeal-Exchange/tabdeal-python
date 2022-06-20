@@ -32,7 +32,7 @@ class Client(object):
         self,
         api_key=None,
         api_secret=None,
-        base_url="https://api.tabdeal.org",
+        base_url="https://api1.tabdeal.org",
         version="v1",
         timeout=None,
         receive_window=None,
