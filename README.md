@@ -16,6 +16,7 @@ pip install tabdeal-python
 ## Documentation
 
 [https://docs.tabdeal.org](https://docs.tabdeal.org/)
+[Postman Collection](https://github.com/Tabdeal-Exchange/tabdeal-api-postman)
 
 ## RESTful APIs
 
