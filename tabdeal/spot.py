@@ -227,6 +227,13 @@ class Spot(Client):
             security_type=SecurityTypes.TRADE,
         )
 
+    def account(self):
+        return self.request(
+            url="account",
+            method=RequestTypes.GET,
+            security_type=SecurityTypes.TRADE,
+        )
+
     def my_trades(
         self,
         symbol: str,
