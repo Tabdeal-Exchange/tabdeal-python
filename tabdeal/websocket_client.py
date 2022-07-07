@@ -7,20 +7,24 @@ class SpotWebsocketClient:
     def __init__(self):
         self._websockets = []
 
+    def subscribe(self, callback, url="", payload=None):
+        ws = TabdealWebsocketClientThread(callback=callback, payload=payload, url=url)
+        ws.start()
+
+        self._websockets.append(ws)
+
     def market_order_book(self, symbol: str, id: int, callback: Callable):
-        ws = TabdealWebsocketClientThread(
-            callback=callback,
+        return self.subscribe(
             payload={
                 "method": "SUBSCRIBE",
                 "id": id,
                 "params": [f"{symbol}@depth@2000ms"],
             },
+            callback=callback,
         )
-        ws.start()
 
-        self._websockets.append(ws)
-
-        return ws
+    def user_data(self, listen_key: str, callback):
+        return self.subscribe(callback=callback, url=listen_key)
 
     def stop(self):
         for _websocket in self._websockets:

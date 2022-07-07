@@ -154,7 +154,8 @@ class TabdealWebsocketClientThread(Thread):
 
     def on_open(self, ws):
         logger.debug("Websocket connected....")
-        self.ws.send(json.dumps(self.payload))
+        if self.payload:
+            self.ws.send(json.dumps(self.payload))
 
     def on_message(self, ws, message):
         self.callback(message)
