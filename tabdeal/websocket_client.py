@@ -7,8 +7,10 @@ class SpotWebsocketClient:
     def __init__(self):
         self._websockets = []
 
-    def subscribe(self, callback, url="", payload=None):
-        ws = TabdealWebsocketClientThread(callback=callback, payload=payload, url=url)
+    def subscribe(self, callback, stream=None, payload=None):
+        ws = TabdealWebsocketClientThread(
+            callback=callback, payload=payload, stream=stream
+        )
         ws.start()
 
         self._websockets.append(ws)
@@ -24,7 +26,7 @@ class SpotWebsocketClient:
         )
 
     def user_data(self, listen_key: str, callback):
-        return self.subscribe(callback=callback, url=listen_key)
+        return self.subscribe(callback=callback, stream=listen_key)
 
     def stop(self):
         for _websocket in self._websockets:
