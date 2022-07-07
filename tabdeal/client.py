@@ -1,10 +1,14 @@
 import hashlib
 import hmac
+import json
+import logging
 import time
 from json import JSONDecodeError
+from threading import Thread
 from urllib.parse import urlencode
 
 import requests
+import websocket
 
 from tabdeal.enums import RequestTypes, SecurityTypes
 from tabdeal.exceptions import (
@@ -13,6 +17,8 @@ from tabdeal.exceptions import (
     ServerException,
     UnStructuredResponseException,
 )
+
+logger = logging.getLogger(__name__)
 
 
 class Client(object):
@@ -130,3 +136,33 @@ class Client(object):
 
     def _update_session_headers(self, headers):
         self.session.headers.update(headers)
+
+
+class TabdealWebsocketClientThread(Thread):
+    def __init__(self, callback, url="", payload=None):
+        self.payload = payload
+        self.callback = callback
+        self.base_url = "wss://api.tabdeal.org/stream/"
+
+        url = self.base_url + url
+
+        self.ws = websocket.WebSocketApp(
+            url=url, on_message=self.on_message, on_open=self.on_open
+        )
+
+        super().__init__()
+
+    def on_open(self, ws):
+        logger.debug("Websocket connected....")
+        self.ws.send(json.dumps(self.payload))
+
+    def on_message(self, ws, message):
+        self.callback(message)
+
+    def run(self):
+        self.ws.run_forever()
+
+    def join(self, timeout=None):
+        self.ws.close()
+        super().join(timeout=timeout)
+        logger.debug("Websocket disconnected ...")
