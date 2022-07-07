@@ -21,3 +21,11 @@ def add_symbol_to_data(data, symbol):
         data.update({"symbol": symbol})
 
     return data
+
+
+def config_logger(logging, logging_level):
+    logging.basicConfig(
+        level=logging_level,
+        format="%(asctime)s.%(msecs)03d UTC %(levelname)s %(name)s: %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S",
+    )
