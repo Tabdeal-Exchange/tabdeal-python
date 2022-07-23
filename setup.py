@@ -10,7 +10,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="tabdeal-python",
-    version="0.3.0",
+    version="0.3.1",
     author="Amin Basiri",
     author_email="amin.bsr99@gmail.com",
     description="Official python package to use Tabdeal API",
@@ -29,6 +29,6 @@ setuptools.setup(
         exclude=["tests", "*.tests", "*.tests.*", "tests.*"]
     ),
     install_requires=[req for req in requirements],
-    python_requires=">=3.8",
+    python_requires=">=3.6",
     include_package_data=True,
 )
