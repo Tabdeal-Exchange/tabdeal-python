@@ -3,9 +3,10 @@ import hmac
 import json
 import logging
 import time
-from json import JSONDecodeError
 from threading import Thread
+from json import JSONDecodeError
 from urllib.parse import urlencode
+from websocket._exceptions import WebSocketException
 
 import requests
 import websocket
@@ -164,9 +165,11 @@ class TabdealWebsocketClientThread(Thread):
         self.callback(message)
 
     def run(self):
-        self.ws.run_forever()
+        while True:
+            self.ws.run_forever()
+            time.sleep(1)
 
     def join(self, timeout=None):
         self.ws.close()
         super().join(timeout=timeout)
-        logger.debug("Websocket disconnected ...")
+        logger.debug("Websocket disconnected successfully")
