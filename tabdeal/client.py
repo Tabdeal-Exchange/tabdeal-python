@@ -6,7 +6,6 @@ import time
 from threading import Thread
 from json import JSONDecodeError
 from urllib.parse import urlencode
-from websocket._exceptions import WebSocketException
 
 import requests
 import websocket
