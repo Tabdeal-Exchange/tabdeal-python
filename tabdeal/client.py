@@ -16,6 +16,7 @@ from tabdeal.exceptions import (
     SecurityException,
     ServerException,
     UnStructuredResponseException,
+    WebsocketClosedException,
 )
 
 logger = logging.getLogger(__name__)
@@ -138,6 +139,25 @@ class Client(object):
         self.session.headers.update(headers)
 
 
+class TabdealWebsocketClient(websocket.WebSocketApp):
+    def __init__(self, url, **kwargs):
+        super(TabdealWebsocketClient, self).__init__(url, **kwargs)
+        self.raise_exception_on_close = False
+
+    def close(self, raise_exception=False, **kwargs):
+        self.raise_exception_on_close = raise_exception
+        self.keep_running = False
+        if self.sock:
+            self.sock.close(**kwargs)
+            self.sock = None
+
+    def run_forever(self, **kwargs):
+        super(TabdealWebsocketClient, self).run_forever(**kwargs)
+
+        if self.raise_exception_on_close:
+            raise WebsocketClosedException()
+
+
 class TabdealWebsocketClientThread(Thread):
     def __init__(self, callback, stream=None, payload=None):
         self.payload = payload
@@ -149,26 +169,35 @@ class TabdealWebsocketClientThread(Thread):
         else:
             url = self.base_url
 
-        self.ws = websocket.WebSocketApp(
-            url=url, on_message=self.on_message, on_open=self.on_open
+        self.ws = TabdealWebsocketClient(
+            url=url,
+            on_message=self.on_message,
+            on_open=self.on_open,
+            on_error=self.on_error,
         )
 
         super().__init__()
 
     def on_open(self, ws):
-        logger.debug("Websocket connected....")
+        logger.debug("Websocket connected ...")
         if self.payload:
             self.ws.send(json.dumps(self.payload))
+
+    def on_error(self, ws, exc):
+        logger.debug("Websocket erred ...")
 
     def on_message(self, ws, message):
         self.callback(message)
 
     def run(self):
         while True:
-            self.ws.run_forever()
+            try:
+                self.ws.run_forever()
+            except WebsocketClosedException:
+                break
             time.sleep(1)
 
     def join(self, timeout=None):
-        self.ws.close()
+        self.ws.close(raise_exception=True)
         super().join(timeout=timeout)
         logger.debug("Websocket disconnected successfully")

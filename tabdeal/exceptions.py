@@ -47,3 +47,7 @@ class SecurityException(CoreException):
 
     def __str__(self):
         return self.message
+
+
+class WebsocketClosedException(CoreException):
+    pass
