@@ -192,7 +192,7 @@ class TabdealWebsocketClientThread(Thread):
     def run(self):
         while True:
             try:
-                self.ws.run_forever()
+                self.ws.run_forever(ping_interval=30, ping_timeout=5)
             except WebsocketClosedException:
                 break
             time.sleep(1)
