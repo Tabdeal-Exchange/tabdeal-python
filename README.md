@@ -35,7 +35,7 @@ client = Spot(api_key, api_secret)
 order = client.new_order(symbol='BTC_IRT',
                          side=OrderSides.BUY,
                          type=OrderTypes.MARKET,
-                         quantity=0.002)
+                         quantity="0.002")
 
 print(order)
 ```

@@ -13,10 +13,10 @@ class Spot(Client):
         symbol: str,
         side: OrderSides,
         type: OrderTypes,
-        quantity: float,
+        quantity: str,
         client_order_id: str = None,
-        price: float = None,
-        stop_price: float = None,
+        price: str = None,
+        stop_price: str = None,
     ):
         check_new_order_params(type, price=price, stop_price=stop_price)
 
@@ -131,10 +131,10 @@ class Spot(Client):
         self,
         symbol: str,
         side: OrderSides,
-        quantity: float,
-        price: float,
-        stop_price: float,
-        stop_limit_price: float,
+        quantity: str,
+        price: str,
+        stop_price: str,
+        stop_limit_price: str,
         list_client_order_id: str = None,
         limit_client_order_id: str = None,
         stop_client_order_id: str = None,
