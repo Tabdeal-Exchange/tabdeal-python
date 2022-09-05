@@ -1,4 +1,4 @@
-from typing import Callable
+from typing import Callable, List
 
 from tabdeal.client import TabdealWebsocketClientThread
 
@@ -21,6 +21,18 @@ class SpotWebsocketClient:
                 "method": "SUBSCRIBE",
                 "id": id,
                 "params": [f"{symbol}@depth@2000ms"],
+            },
+            callback=callback,
+        )
+
+    def multiple_market_order_book(
+        self, symbols: List[str], id: int, callback: Callable
+    ):
+        return self.subscribe(
+            payload={
+                "method": "SUBSCRIBE",
+                "id": id,
+                "params": [f"{symbol}@depth@2000ms" for symbol in symbols],
             },
             callback=callback,
         )
