@@ -3,31 +3,26 @@ fail_fast: true
 
 repos:
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v0.800
+    rev: v0.971
     hooks:
       - id: mypy
         args: [--no-strict-optional, --ignore-missing-imports]
         files: ^(app/|tests/)
 
-  - repo: https://github.com/asottile/seed-isort-config
-    rev: v1.9.3
-    hooks:
-      - id: seed-isort-config
-
   - repo: https://github.com/timothycrosley/isort
-    rev: 4.3.21-2
+    rev: 5.10.1
     hooks:
       - id: isort
 
   - repo: https://gitlab.com/pycqa/flake8
-    rev: 3.9.2
+    rev: 5.0.4
     hooks:
       - id: flake8
-        files: ^tabdeal/
+        files: ^coinex/
         args:
           - "--max-line-length=88"
 
   - repo: https://github.com/psf/black
-    rev: 22.3.0
+    rev: 22.8.0
     hooks:
       - id: black
