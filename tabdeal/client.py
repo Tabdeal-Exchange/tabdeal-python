@@ -159,10 +159,16 @@ class TabdealWebsocketClient(websocket.WebSocketApp):
 
 
 class TabdealWebsocketClientThread(Thread):
-    def __init__(self, callback, stream=None, payload=None):
+    def __init__(
+        self,
+        callback,
+        stream=None,
+        payload=None,
+        base_url="wss://api1.tabdeal.org/stream/",
+    ):
         self.payload = payload
         self.callback = callback
-        self.base_url = "wss://api.tabdeal.org/stream/"
+        self.base_url = base_url
 
         if stream:
             url = self.base_url + f"?streams={stream}"

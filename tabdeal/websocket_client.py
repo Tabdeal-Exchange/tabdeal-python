@@ -4,12 +4,13 @@ from tabdeal.client import TabdealWebsocketClientThread
 
 
 class SpotWebsocketClient:
-    def __init__(self):
+    def __init__(self, base_url="wss://api1.tabdeal.org/stream/"):
         self._websockets = []
+        self.base_url = base_url
 
     def subscribe(self, callback, stream=None, payload=None):
         ws = TabdealWebsocketClientThread(
-            callback=callback, payload=payload, stream=stream
+            callback=callback, payload=payload, stream=stream, base_url=self.base_url
         )
         ws.start()
 
