@@ -41,91 +41,19 @@ class Spot(Client):
         )
 
     def get_open_orders(self, symbol: str = None):
-        data = dict() if not symbol else add_symbol_to_data(dict(), symbol)
-
-        return self.request(
-            url="openOrders",
-            method=RequestTypes.GET,
-            security_type=SecurityTypes.TRADE,
-            data=data,
-        )
-
-    def get_order(self, symbol: str, order_id: int = None, client_order_id: str = None):
-        data = dict()
-
-        add_symbol_to_data(data, symbol)
-
-        if client_order_id:
-            data.update({"origClientOrderId": client_order_id})
-
-        if order_id:
-            data.update({"orderId": order_id})
-
-        return self.request(
-            url="order",
-            method=RequestTypes.GET,
-            security_type=SecurityTypes.TRADE,
-            data=data,
-        )
-
-    def cancel_order(
-        self, symbol: str, order_id: int = None, client_order_id: str = None
-    ):
-        data = dict()
-
-        add_symbol_to_data(data, symbol)
-
-        if client_order_id:
-            data.update({"origClientOrderId": client_order_id})
-
-        if order_id:
-            data.update({"orderId": order_id})
-
-        return self.request(
-            url="order",
-            method=RequestTypes.DELETE,
-            security_type=SecurityTypes.TRADE,
-            data=data,
-        )
+        return self.client_get_open_orders(symbol=symbol)
 
     def get_orders(
-        self,
-        symbol: str,
-        start_time: int = None,
-        end_time: int = None,
-        limit: int = None,
+            self,
+            symbol: str,
+            start_time: int = None,
+            end_time: int = None,
+            limit: int = None,
     ):
-        data = dict()
-
-        add_symbol_to_data(data, symbol)
-
-        if start_time:
-            data.update({"startTime": start_time})
-
-        if end_time:
-            data.update({"endTime": end_time})
-
-        if limit:
-            data.update({"limit": limit})
-
-        return self.request(
-            url="allOrders",
-            method=RequestTypes.GET,
-            security_type=SecurityTypes.TRADE,
-            data=data,
-        )
+        return self.client_get_orders(symbol=symbol, start_time=start_time, end_time=end_time, limit=limit)
 
     def cancel_open_orders(self, symbol: str):
-        data = dict()
-
-        add_symbol_to_data(data, symbol)
-
-        return self.request(
-            url="openOrders",
-            method=RequestTypes.DELETE,
-            security_type=SecurityTypes.TRADE,
-            data=data,
-        )
+        return self.client_cancel_open_orders(symbol=symbol)
 
     def new_oco_order(
         self,

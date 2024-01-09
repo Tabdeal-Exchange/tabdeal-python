@@ -6,6 +6,7 @@ import time
 from json import JSONDecodeError
 from threading import Thread
 from urllib.parse import urlencode
+from tabdeal.utils import add_symbol_to_data
 
 import requests
 import websocket
@@ -137,6 +138,94 @@ class Client(object):
 
     def _update_session_headers(self, headers):
         self.session.headers.update(headers)
+
+    def client_get_orders(
+            self,
+            symbol: str,
+            start_time: int = None,
+            end_time: int = None,
+            limit: int = None,
+            url="allOrders"
+    ):
+        data = dict()
+
+        add_symbol_to_data(data, symbol)
+
+        if start_time:
+            data.update({"startTime": start_time})
+
+        if end_time:
+            data.update({"endTime": end_time})
+
+        if limit:
+            data.update({"limit": limit})
+
+        return self.request(
+            url=url,
+            method=RequestTypes.GET,
+            security_type=SecurityTypes.TRADE,
+            data=data,
+        )
+
+    def client_get_open_orders(self, symbol: str = None, url="openOrders"):
+        data = dict() if not symbol else add_symbol_to_data(dict(), symbol)
+
+        return self.request(
+            url=url,
+            method=RequestTypes.GET,
+            security_type=SecurityTypes.TRADE,
+            data=data,
+        )
+
+    def client_cancel_open_orders(self, symbol: str, url="openOrders"):
+        data = dict()
+
+        add_symbol_to_data(data, symbol)
+
+        return self.request(
+            url=url,
+            method=RequestTypes.DELETE,
+            security_type=SecurityTypes.TRADE,
+            data=data,
+        )
+
+    def get_order(self, symbol: str, order_id: int = None, client_order_id: str = None):
+        data = dict()
+
+        add_symbol_to_data(data, symbol)
+
+        if client_order_id:
+            data.update({"origClientOrderId": client_order_id})
+
+        if order_id:
+            data.update({"orderId": order_id})
+
+        return self.request(
+            url="order",
+            method=RequestTypes.GET,
+            security_type=SecurityTypes.TRADE,
+            data=data,
+        )
+
+    def cancel_order(
+            self, symbol: str, order_id: int = None, client_order_id: str = None, url="order"
+    ):
+        data = dict()
+
+        add_symbol_to_data(data, symbol)
+
+        if client_order_id:
+            data.update({"origClientOrderId": client_order_id})
+
+        if order_id:
+            data.update({"orderId": order_id})
+
+        return self.request(
+            url=url,
+            method=RequestTypes.DELETE,
+            security_type=SecurityTypes.TRADE,
+            data=data,
+        )
 
 
 class TabdealWebsocketClient(websocket.WebSocketApp):
