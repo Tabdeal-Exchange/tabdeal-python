@@ -112,7 +112,6 @@ class IsolatedMargin(Client):
             price: str = None,
             stop_price: str = None
     ):
-        # check_new_order_params(type, price=price, stop_price=stop_price)
 
         data = {
             "side": side.value,
@@ -165,8 +164,6 @@ class IsolatedMargin(Client):
         data = {}
         if asset:
             data["asset"] = asset
-        # if type:
-        #     data["type"] = type
         if start_time:
             data["startTime"] = start_time
         if end_time:
