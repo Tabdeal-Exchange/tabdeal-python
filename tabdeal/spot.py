@@ -168,6 +168,7 @@ class Spot(Client):
         start_time: int = None,
         end_time: int = None,
         limit: int = None,
+        order_id: int = None,
     ):
         data = dict()
 
@@ -181,6 +182,9 @@ class Spot(Client):
 
         if limit:
             data.update({"limit": limit})
+
+        if order_id:
+            data.update({"orderId": order_id})
 
         return self.request(
             url="myTrades",
