@@ -177,6 +177,22 @@ class Client(object):
             data=data,
         )
 
+    def client_get_paginated_open_orders(self, symbol: str = None, page: int = None, page_size: int = None,
+                                         url="paginatedOpenOrders"):
+        data = dict() if not symbol else add_symbol_to_data(dict(), symbol)
+        if page is not None and page_size is not None:
+            data.update({
+                'page': page,
+                'page_size': page_size
+            })
+
+        return self.request(
+            url=url,
+            method=RequestTypes.GET,
+            security_type=SecurityTypes.TRADE,
+            data=data,
+        )
+
     def client_cancel_open_orders(self, symbol: str, url="openOrders"):
         data = dict()
 
