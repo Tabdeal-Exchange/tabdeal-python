@@ -45,7 +45,7 @@ class Spot(Client):
 
     def get_orders(
             self,
-            symbol: str,
+            symbol: str = None,
             start_time: int = None,
             end_time: int = None,
             limit: int = None,
