@@ -180,9 +180,13 @@ class Client(object):
     def client_get_paginated_open_orders(self, symbol: str = None, page: int = None, page_size: int = None,
                                          url="paginatedOpenOrders"):
         data = dict() if not symbol else add_symbol_to_data(dict(), symbol)
-        if page is not None and page_size is not None:
+        if page is not None:
             data.update({
-                'page': page,
+                'page': page
+            })
+
+        if page_size is not None:
+            data.update({
                 'page_size': page_size
             })
 
