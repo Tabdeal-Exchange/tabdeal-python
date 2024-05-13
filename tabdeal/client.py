@@ -141,7 +141,7 @@ class Client(object):
 
     def client_get_orders(
             self,
-            symbol: str,
+            symbol: str = None,
             start_time: int = None,
             end_time: int = None,
             limit: int = None,
@@ -176,6 +176,30 @@ class Client(object):
             security_type=SecurityTypes.TRADE,
             data=data,
         )
+
+
+    def client_get_non_expired_all_orders(self,
+                                          start_time: int = None,
+                                          end_time: int = None,
+                                          limit: int = None,
+                                          url = "nonExpiredAllOrders"):
+        data = dict()
+
+        if start_time:
+            data.update({"startTime": start_time})
+
+        if end_time:
+            data.update({"endTime": end_time})
+
+        if limit:
+            data.update({"limit": limit})
+
+        return self.request(
+            url=url,
+            method=RequestTypes.GET,
+            security_type=SecurityTypes.TRADE,
+            data=data,
+            )
 
     def client_cancel_open_orders(self, symbol: str, url="openOrders"):
         data = dict()
