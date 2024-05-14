@@ -177,6 +177,30 @@ class Client(object):
             data=data,
         )
 
+
+    def client_get_non_expired_all_orders(self,
+                                          start_time: int = None,
+                                          end_time: int = None,
+                                          limit: int = None,
+                                          url = "nonExpiredAllOrders"):
+        data = dict()
+
+        if start_time:
+            data.update({"startTime": start_time})
+
+        if end_time:
+            data.update({"endTime": end_time})
+
+        if limit:
+            data.update({"limit": limit})
+            
+        return self.request(
+            url=url,
+            method=RequestTypes.GET,
+            security_type=SecurityTypes.TRADE,
+            data=data,
+        )
+
     def client_get_paginated_open_orders(self, symbol: str = None, page: int = None, page_size: int = None,
                                          url="paginatedOpenOrders"):
         data = dict() if not symbol else add_symbol_to_data(dict(), symbol)

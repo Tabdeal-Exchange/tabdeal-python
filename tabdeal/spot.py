@@ -55,6 +55,12 @@ class Spot(Client):
     ):
         return self.client_get_orders(symbol=symbol, start_time=start_time, end_time=end_time, limit=limit)
 
+    def get_non_expired_all_orders(self, start_time: int = None,
+                                   end_time: int = None,
+                                   limit: int = None):
+        return self.client_get_non_expired_all_orders(start_time=start_time, end_time=end_time, limit=limit)
+
+
     def cancel_open_orders(self, symbol: str):
         return self.client_cancel_open_orders(symbol=symbol)
 
