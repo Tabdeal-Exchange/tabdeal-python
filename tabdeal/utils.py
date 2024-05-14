@@ -15,7 +15,9 @@ def check_new_order_params(order_type: OrderTypes, **kwargs):
 
 
 def add_symbol_to_data(data, symbol):
-    if "_" in symbol:
+    if symbol is None:
+        pass
+    elif "_" in symbol:
         data.update({"tabdealSymbol": symbol})
     else:
         data.update({"symbol": symbol})

@@ -43,6 +43,9 @@ class Spot(Client):
     def get_open_orders(self, symbol: str = None):
         return self.client_get_open_orders(symbol=symbol)
 
+    def get_paginated_open_orders(self, symbol: str = None, page: int = None, page_size: int = None):
+        return self.client_get_paginated_open_orders(symbol=symbol, page=page, page_size=page_size)
+
     def get_orders(
             self,
             symbol: str = None,
