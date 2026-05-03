@@ -44,3 +44,13 @@ class SpotWebsocketClient:
     def stop(self):
         for _websocket in self._websockets:
             _websocket.join()
+
+
+class FutureWebsocketClient(SpotWebsocketClient):
+    def __init__(self, base_url="wss://api1.tabdeal.org/special_margin/stream/"):
+        super().__init__(base_url=base_url)
+
+
+class FutureBroadcastWebsocketClient(SpotWebsocketClient):
+    def __init__(self, base_url="wss://api1.tabdeal.org/special_margin/broadcast/"):
+        super().__init__(base_url=base_url)
