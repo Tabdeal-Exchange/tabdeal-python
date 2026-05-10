@@ -22,7 +22,7 @@ class Future(Client):
             receive_window=receive_window,
         )
         self.base_url = f"{base_url}/fapi/"
-        self.base_read_url = self.base_url
+        self.base_read_url = f"{base_url}/r/fapi/"
 
     # Public market endpoints
     def ping(self):
