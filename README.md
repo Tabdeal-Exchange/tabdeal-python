@@ -40,6 +40,42 @@ order = client.new_order(symbol='BTC_IRT',
 print(order)
 ```
 
+## Future APIs
+
+Usage example:
+```python
+from tabdeal.enums import OrderSides, OrderTypes
+from tabdeal.future import Future
+
+api_key = "<api_key>"
+api_secret = "<api_secret>"
+
+client = Future(api_key, api_secret)
+
+client.ping()
+client.exchange_info()
+
+order = client.new_order(
+    symbol="BTCUSDT",
+    side=OrderSides.BUY,
+    type=OrderTypes.MARKET,
+    quantity="0.001",
+)
+
+print(order)
+```
+
+Special Margin websocket helpers:
+```python
+from tabdeal.websocket_client import (
+    FutureWebsocketClient,
+    FutureBroadcastWebsocketClient,
+)
+
+stream_ws = FutureWebsocketClient()
+broadcast_ws = FutureBroadcastWebsocketClient()
+```
+
 ### Exception
 
 There are 2 types of exceptions returned from the library:
