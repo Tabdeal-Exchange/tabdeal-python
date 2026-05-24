@@ -140,12 +140,12 @@ class Client(object):
         self.session.headers.update(headers)
 
     def client_get_orders(
-            self,
-            symbol: str = None,
-            start_time: int = None,
-            end_time: int = None,
-            limit: int = None,
-            url="allOrders"
+        self,
+        symbol: str = None,
+        start_time: int = None,
+        end_time: int = None,
+        limit: int = None,
+        url="allOrders",
     ):
         data = dict()
 
@@ -177,12 +177,13 @@ class Client(object):
             data=data,
         )
 
-
-    def client_get_non_expired_all_orders(self,
-                                          start_time: int = None,
-                                          end_time: int = None,
-                                          limit: int = None,
-                                          url = "nonExpiredAllOrders"):
+    def client_get_non_expired_all_orders(
+        self,
+        start_time: int = None,
+        end_time: int = None,
+        limit: int = None,
+        url="nonExpiredAllOrders",
+    ):
         data = dict()
 
         if start_time:
@@ -193,7 +194,7 @@ class Client(object):
 
         if limit:
             data.update({"limit": limit})
-            
+
         return self.request(
             url=url,
             method=RequestTypes.GET,
@@ -201,18 +202,19 @@ class Client(object):
             data=data,
         )
 
-    def client_get_paginated_open_orders(self, symbol: str = None, page: int = None, page_size: int = None,
-                                         url="paginatedOpenOrders"):
+    def client_get_paginated_open_orders(
+        self,
+        symbol: str = None,
+        page: int = None,
+        page_size: int = None,
+        url="paginatedOpenOrders",
+    ):
         data = dict() if not symbol else add_symbol_to_data(dict(), symbol)
         if page is not None:
-            data.update({
-                'page': page
-            })
+            data.update({"page": page})
 
         if page_size is not None:
-            data.update({
-                'page_size': page_size
-            })
+            data.update({"page_size": page_size})
 
         return self.request(
             url=url,
@@ -252,7 +254,11 @@ class Client(object):
         )
 
     def cancel_order(
-            self, symbol: str, order_id: int = None, client_order_id: str = None, url="order"
+        self,
+        symbol: str,
+        order_id: int = None,
+        client_order_id: str = None,
+        url="order",
     ):
         data = dict()
 

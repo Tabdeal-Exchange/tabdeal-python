@@ -29,6 +29,6 @@ setuptools.setup(
         exclude=["tests", "*.tests", "*.tests.*", "tests.*"]
     ),
     install_requires=[req for req in requirements],
-    python_requires=">=3.6",
+    python_requires=">=3.7",
     include_package_data=True,
 )
