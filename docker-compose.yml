@@ -1,0 +1,12 @@
+services:
+  sdk-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    network_mode: bridge
+    working_dir: /workspace
+    command: ["sleep", "infinity"]
+    volumes:
+      - ./:/workspace
+    tty: true
+    stdin_open: true
