@@ -2,16 +2,71 @@
 [![PyPI version](https://img.shields.io/pypi/v/tabdeal-python)](https://pypi.python.org/pypi/tabdeal-python)
 [![Python version](https://img.shields.io/pypi/pyversions/tabdeal-python)](https://www.python.org/downloads/)
 
-
-
 Official python package to use [Tabdeal Exchange](https://www.tabdeal.org/) API
 
+## Quickstart Installer Panel
+
+This repository now includes a beginner-friendly desktop quickstart panel for Windows and Linux.
+
+It helps with:
+
+- one-click virtual environment setup
+- automatic SDK installation or update
+- saving API key and secret locally
+- public ping test
+- authenticated account test
+- generating a ready-to-run example script
+
+### Windows one-click
+
+Right click PowerShell and run:
+
+```powershell
+.\install.ps1
+```
+
+What it does:
+
+- finds Python 3 or installs Python 3.11 with `winget` if available
+- creates a dedicated virtual environment in `%LOCALAPPDATA%\TabdealPythonSDK\venv`
+- installs this SDK from the current repository
+- launches the desktop panel
+
+### Linux one-click
+
+```bash
+chmod +x install.sh
+./install.sh
+```
+
+What it does:
+
+- installs Python and Tkinter if missing on common distros
+- creates a dedicated virtual environment in `~/.local/share/tabdeal-python-sdk/venv`
+- installs this SDK from the current repository
+- launches the desktop panel
+
+### Run the panel manually
+
+After installation you can run:
+
+```bash
+tabdeal-panel
+```
+
+or:
+
+```bash
+python -m tabdeal
+```
 
 ## Installation
 
 ```bash
 pip install tabdeal-python
 ```
+
+Recommended Python version: `3.9+`
 
 ## Documentation
 
@@ -88,3 +143,16 @@ There are 2 types of exceptions returned from the library:
         - `detail` - Detail of exception
 - `tabdeal.exceptions.ServerException`
     - This is thrown when server returns `5XX`, it's an issue from server side.
+
+## Developer checks
+
+```bash
+python -m unittest discover -s tests
+```
+
+## Docker dev environment
+
+```bash
+docker compose up -d --build
+docker compose exec sdk-dev python -m unittest discover -s tests
+```

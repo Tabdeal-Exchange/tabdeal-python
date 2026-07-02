@@ -29,6 +29,11 @@ setuptools.setup(
         exclude=["tests", "*.tests", "*.tests.*", "tests.*"]
     ),
     install_requires=[req for req in requirements],
-    python_requires=">=3.6",
+    entry_points={
+        "console_scripts": [
+            "tabdeal-panel=tabdeal.panel:main",
+        ]
+    },
+    python_requires=">=3.9",
     include_package_data=True,
 )
