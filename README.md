@@ -6,6 +6,32 @@
 
 Official python package to use [Tabdeal Exchange](https://www.tabdeal.org/) API
 
+## Quickstart Panel
+
+This fork adds a beginner-friendly desktop quickstart helper for local setup only.
+
+- credentials are stored locally on the current machine only
+- no real trading is performed by the panel or generated example
+- the panel only supports SDK install/update, public ping, account test, config save, and example generation
+
+### Windows
+
+```powershell
+.\install.ps1
+```
+
+### Linux
+
+```bash
+chmod +x install.sh
+./install.sh
+```
+
+### Safe local configuration
+
+- use placeholders from `.env.example`
+- generated example files read credentials from environment variables
+- example generation refuses to overwrite an existing file automatically
 
 ## Installation
 
@@ -88,3 +114,10 @@ There are 2 types of exceptions returned from the library:
         - `detail` - Detail of exception
 - `tabdeal.exceptions.ServerException`
     - This is thrown when server returns `5XX`, it's an issue from server side.
+
+## Developer checks
+
+```bash
+python -m compileall tabdeal tests
+python -m unittest discover -s tests
+```
