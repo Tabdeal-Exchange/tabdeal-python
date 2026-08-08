@@ -7,7 +7,7 @@ from json import JSONDecodeError
 from threading import Thread
 from urllib.parse import urlencode
 from tabdeal.utils import add_symbol_to_data
-
+from typing import Dict, Optional
 import requests
 import websocket
 
@@ -59,9 +59,15 @@ class Client(object):
         url: str,
         method: RequestTypes = RequestTypes.GET,
         security_type: SecurityTypes = SecurityTypes.NONE,
-        data: dict = dict(),
-        headers: dict = dict(),
+        data: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
     ):
+        
+        if data is None:
+            data = {}
+        if headers is None:
+            headers = {}
+
         self._check_security_requirements(security_type)
         self._set_security_header(headers, security_type)
         self._update_session_headers(headers)
